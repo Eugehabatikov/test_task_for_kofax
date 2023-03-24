@@ -5,19 +5,19 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class ReadFileLineByLine {
-
-    // построчное считывание файла
     public static void main(String[] args) {
         try {
-            File file = new File("/Users/prologistic/file.txt");
-            //создаем объект FileReader для объекта File
+            File file = new File("C:/Users/evgenii/PREFERENCE_DEFINITION.csv");
             FileReader fr = new FileReader(file);
-            //создаем BufferedReader с существующего FileReader для построчного считывания
             BufferedReader reader = new BufferedReader(fr);
-            // считаем сначала первую строку
+            String csvVersion = reader.readLine();
+            String tableName = reader.readLine();
+            String columns = reader.readLine();
+            // создать таблицу и колонки CREATE IF NOT EXSIST
             String line = reader.readLine();
             while (line != null) {
-                System.out.println(line);
+                // парсим строку, записываем, результат сразу записываем в бд
+                String[] cells = line.replace("\"\"","").split(";");
                 // считываем остальные строки в цикле
                 line = reader.readLine();
             }
@@ -27,5 +27,6 @@ public class ReadFileLineByLine {
             e.printStackTrace();
         }
     }
+
 
 }
