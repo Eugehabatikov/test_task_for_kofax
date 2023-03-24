@@ -1,0 +1,8 @@
+src/main/resources/db.properties
+Config
+out
+target
+.idea
+gitignore
+c3p0-config.xml
+lib
