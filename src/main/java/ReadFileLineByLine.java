@@ -6,7 +6,16 @@ import java.io.IOException;
 
 public class ReadFileLineByLine {
     public static void main(String[] args) {
-        try {
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
+            System.out.println("Connection succesfull!");
+        }
+        catch(Exception ex) {
+            System.out.println("Connection failed...");
+
+            System.out.println(ex);
+        }
+       /** try {
             File file = new File("C:/Users/evgenii/PREFERENCE_DEFINITION.csv");
             FileReader fr = new FileReader(file);
             BufferedReader reader = new BufferedReader(fr);
@@ -18,6 +27,7 @@ public class ReadFileLineByLine {
             while (line != null) {
                 // парсим строку, записываем, результат сразу записываем в бд
                 String[] cells = line.replace("\"\"","").split(";");
+
                 // считываем остальные строки в цикле
                 line = reader.readLine();
             }
@@ -25,8 +35,6 @@ public class ReadFileLineByLine {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }**/
     }
-
-
 }
