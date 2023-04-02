@@ -1,5 +1,3 @@
-import com.sun.deploy.net.MessageHeader;
-
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -32,15 +30,18 @@ public class ReadFileLineByLine {
             statement.executeUpdate(getCreateTableQuery());
             String line = reader.readLine();
             while (line != null) {
-                line = line.substring(0, line.length() - 1);
-                String[] cells = line.substring(line.indexOf(';') + 1).replace("\"\"", "").split(";");
-                TableLine lineObject = new TableLine(cells);
+                line = line.substring(0, line.length() - 2);
+                List<String> rawData = new ArrayList<>(Arrays.asList(line.split("\";\"")));
+                rawData.remove(0);
+                TableLine lineObject = new TableLine(rawData);
                 String test = TableLine.inputValue(lineObject);
                 String newLine = "INSERT INTO " + tableName + " (" + columnsResult + ") VALUES (" + TableLine.inputValue(lineObject) + ") ";
                 statement.executeUpdate(newLine);
                 line = reader.readLine();
             }
-            System.out.println("CSV was added correctly");
+           // System.out.println("CSV was added correctly");
+            //ResultSet str = statement.executeQuery("select * from PREFERENCE_DEFINITION_7");
+           // System.out.println();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (SQLException | IllegalAccessException | ClassNotFoundException | InvocationTargetException |
