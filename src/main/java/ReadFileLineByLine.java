@@ -1,3 +1,5 @@
+import com.sun.deploy.net.MessageHeader;
+
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,6 +9,7 @@ import java.io.*;
 import java.util.*;
 
 public class ReadFileLineByLine {
+
     public static void main(String[] args) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
@@ -27,16 +30,13 @@ public class ReadFileLineByLine {
             columnsResult = columnsResult.substring(0, columnsResult.length() - 2);
             Statement statement = conn.createStatement();
             statement.executeUpdate(getCreateTableQuery());
-
             String line = reader.readLine();
             while (line != null) {
+                line = line.substring(0, line.length() - 1);
                 String[] cells = line.substring(line.indexOf(';') + 1).replace("\"\"", "").split(";");
-                String lineResult = "";
-                for (String cell : cells) {
-                    lineResult = lineResult + cell + ",";
-                }
-                lineResult = lineResult.substring(0, lineResult.length() - 2);
-                String newLine = "INSERT INTO " + tableName + " (" + columnsResult + ") VALUES (" + lineResult + ") ";
+                TableLine lineObject = new TableLine(cells);
+                String test = TableLine.inputValue(lineObject);
+                String newLine = "INSERT INTO " + tableName + " (" + columnsResult + ") VALUES (" + TableLine.inputValue(lineObject) + ") ";
                 statement.executeUpdate(newLine);
                 line = reader.readLine();
             }
@@ -50,7 +50,6 @@ public class ReadFileLineByLine {
     }
 
     public static Connection getConnection() throws SQLException, IOException {
-
         Properties props = new Properties();
         try (InputStream in = Files.newInputStream(Paths.get("database.properties"))) {
             props.load(in);
@@ -58,7 +57,6 @@ public class ReadFileLineByLine {
         String url = props.getProperty("url");
         String username = props.getProperty("username");
         String password = props.getProperty("password");
-
         return DriverManager.getConnection(url, username, password);
     }
 
