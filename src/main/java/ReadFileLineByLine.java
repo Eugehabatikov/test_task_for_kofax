@@ -7,14 +7,14 @@ import java.io.*;
 import java.util.*;
 
 public class ReadFileLineByLine {
-
     public static void main(String[] args) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
-            Connection conn = getConnection();
-            File file = new File("C:/Users/evgenii/PREFERENCE_DEFINITION.csv");
+            Connection connection = getConnection();
+            File file = new File("PREFERENCE_DEFINITION.csv");
             FileReader fr = new FileReader(file);
             BufferedReader reader = new BufferedReader(fr);
+
             String csvVersion = reader.readLine();
             String tableName = reader.readLine().replace("\"\"", "").split(";")[1];
             tableName = tableName.substring(0, tableName.length() - 1);
@@ -25,23 +25,23 @@ public class ReadFileLineByLine {
             for (String column : columns) {
                 columnsResult = columnsResult + column + ",";
             }
-            columnsResult = columnsResult.substring(0, columnsResult.length() - 2);
-            Statement statement = conn.createStatement();
+            columnsResult = columnsResult.substring(0, columnsResult.length() - 2)
+                    .replace("PREFERENCE_DOMAIN_ID.PREFERENCE_DOMAIN_NAME",
+                            "`PREFERENCE_DOMAIN_ID.PREFERENCE_DOMAIN_NAME`");
+            Statement statement = connection.createStatement();
             statement.executeUpdate(getCreateTableQuery());
+
             String line = reader.readLine();
             while (line != null) {
                 line = line.substring(0, line.length() - 2);
                 List<String> rawData = new ArrayList<>(Arrays.asList(line.split("\";\"")));
                 rawData.remove(0);
                 TableLine lineObject = new TableLine(rawData);
-                String test = TableLine.inputValue(lineObject);
-                String newLine = "INSERT INTO " + tableName + " (" + columnsResult + ") VALUES (" + TableLine.inputValue(lineObject) + ") ";
+                String newLine = "INSERT INTO "
+                        + tableName + " (" + columnsResult + ") VALUES (" + TableLine.inputValue(lineObject) + ") ";
                 statement.executeUpdate(newLine);
                 line = reader.readLine();
             }
-           // System.out.println("CSV was added correctly");
-            //ResultSet str = statement.executeQuery("select * from PREFERENCE_DEFINITION_7");
-           // System.out.println();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (SQLException | IllegalAccessException | ClassNotFoundException | InvocationTargetException |
@@ -50,6 +50,10 @@ public class ReadFileLineByLine {
         }
     }
 
+    /**
+     *
+     * @return do connection to server
+     */
     public static Connection getConnection() throws SQLException, IOException {
         Properties props = new Properties();
         try (InputStream in = Files.newInputStream(Paths.get("database.properties"))) {
@@ -61,8 +65,12 @@ public class ReadFileLineByLine {
         return DriverManager.getConnection(url, username, password);
     }
 
+    /**
+     *
+     * @return query data for create table in String format
+     */
     public static String getCreateTableQuery() throws IOException {
-        File file = new File("C:/tmp/test_task_for_kofax/table.creation");
+        File file = new File("table.creation");
         FileReader fr = new FileReader(file);
         BufferedReader reader = new BufferedReader(fr);
         String line = reader.readLine();

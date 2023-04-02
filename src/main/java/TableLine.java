@@ -31,7 +31,7 @@ public class TableLine {
         CHANGEABLE_YN = rawData.get(8).toString().replace("\"", "").replace("\'", "\\'");
         PREFERENCE_DOMAIN_NAME = rawData.get(9).toString().replace("\"", "").replace("\'", "\\'");
         USE_DEFAULT_VALUE_YN = rawData.get(10).toString().replace("\"", "").replace("\'", "\\'");
-        DEFAULT_VALUE =rawData.get(11).toString().replace("\"", "").replace("\'", "\\'");
+        DEFAULT_VALUE = rawData.get(11).toString().replace("\"", "").replace("\'", "\\'");
         GROUP_LEVEL_PRIORITY_YN = rawData.get(12).toString().replace("\"", "").replace("\'", "\\'");
         GROUP_RESOLUTION_METHOD = rawData.get(13).toString().replace("\"", "").replace("\'", "\\'");
         PRESERVE_ON_UPGRADE_YN = rawData.get(14).toString().replace("\"", "").replace("\'", "\\'");
