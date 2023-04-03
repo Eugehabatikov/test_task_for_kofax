@@ -42,11 +42,9 @@ public class ReadFileLineByLine {
                 statement.executeUpdate(newLine);
                 line = reader.readLine();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SQLException | IllegalAccessException | ClassNotFoundException | InvocationTargetException |
+        } catch (IOException | SQLException | IllegalAccessException | ClassNotFoundException | InvocationTargetException |
                  InstantiationException | NoSuchMethodException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
