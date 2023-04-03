@@ -1,6 +1,7 @@
 # test_task_for_kofax
-Task deskription: "Write a program in Java that reads data from a given csv file and writes it to a table. Any relational database."
- 
+Task deskription: "Write a program in Java that reads data from a given CSV file and writes it to a table. Any relational database."
+CSV file is included in the project
+
 - use MySql (my version is 8.0.32) 
 - need to create server 
 - create user for connection 
