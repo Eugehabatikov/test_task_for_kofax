@@ -20,23 +20,27 @@ public class TableLine {
     String orgLevelYn;
 
     public TableLine(List rawData) {
-        delFlag = rawData.get(0).toString().replace("\"", "").replace("\'", "\\'");
-        seedVersionAdded = rawData.get(1).toString().replace("\"", "").replace("\'", "\\'");
-        seedVersionUpdated = rawData.get(2).toString().replace("\"", "").replace("\'", "\\'");
-        preferenceName = rawData.get(3).toString().replace("\"", "").replace("\'", "\\'");
-        description = rawData.get(4).toString().replace("\"", "").replace("\'", "\\'");
-        systemLevelYn = rawData.get(5).toString().replace("\"", "").replace("\'", "\\'");
-        groupLevelYn = rawData.get(6).toString().replace("\"", "").replace("\'", "\\'");
-        userLevelYn = rawData.get(7).toString().replace("\"", "").replace("\'", "\\'");
-        changeableYn = rawData.get(8).toString().replace("\"", "").replace("\'", "\\'");
-        preferenceDomainName = rawData.get(9).toString().replace("\"", "").replace("\'", "\\'");
-        useDefaultValueYn = rawData.get(10).toString().replace("\"", "").replace("\'", "\\'");
-        defaultValue = rawData.get(11).toString().replace("\"", "").replace("\'", "\\'");
-        groupLevelPriorityYn = rawData.get(12).toString().replace("\"", "").replace("\'", "\\'");
-        groupResolutionMethod = rawData.get(13).toString().replace("\"", "").replace("\'", "\\'");
-        preserveOnUpgradeYn = rawData.get(14).toString().replace("\"", "").replace("\'", "\\'");
-        moduleName = rawData.get(15).toString().replace("\"", "").replace("\'", "\\'");
-        orgLevelYn = rawData.get(16).toString().replace("\"", "").replace("\'", "\\'");
+        delFlag = replace(rawData.get(0).toString());
+        seedVersionAdded = replace(rawData.get(1).toString());
+        seedVersionUpdated = replace(rawData.get(2).toString());
+        preferenceName = replace(rawData.get(3).toString());
+        description = replace(rawData.get(4).toString());
+        systemLevelYn = replace(rawData.get(5).toString());
+        groupLevelYn = replace(rawData.get(6).toString());
+        userLevelYn = replace(rawData.get(7).toString());
+        changeableYn = replace(rawData.get(8).toString());
+        preferenceDomainName = replace(rawData.get(9).toString());
+        useDefaultValueYn = replace(rawData.get(10).toString());
+        defaultValue = replace(rawData.get(11).toString());
+        groupLevelPriorityYn = replace(rawData.get(12).toString());
+        groupResolutionMethod = replace(rawData.get(13).toString());
+        preserveOnUpgradeYn = replace(rawData.get(14).toString());
+        moduleName = replace(rawData.get(15).toString());
+        orgLevelYn = replace(rawData.get(16).toString());
+    }
+
+    public static String replace (String rawData){
+        return rawData.replace("\"", "").replace("\'", "\\'");
     }
 
     public static String inputValue(TableLine value) {
